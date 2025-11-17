@@ -61,7 +61,7 @@ export class DpoService {
         Services: {
           Service: {
             ServiceType: process.env.DPO_SERVICE_TYPE,
-            ServiceDescription: 'Ronnie's Entertainment Subscription',
+            ServiceDescription: 'Ronnie\'s Entertainment Subscription',
             ServiceDate: new Date().toISOString().split('T')[0]
           }
         }
