@@ -27,7 +27,7 @@ export const sendWelcomeEmail = async (email, fullName, password, whatsappLink) 
     const mailOptions = {
       from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Welcome to Ronnie's Entertainment - Your Account is Ready!',
+      subject: 'Welcome to Ronnie\'s Entertainment - Your Account is Ready!',
       html: `
 <!DOCTYPE html>
 <html>
