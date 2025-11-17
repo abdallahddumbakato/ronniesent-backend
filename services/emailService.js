@@ -203,7 +203,7 @@ export const sendPasswordResetEmail = async (email, otp, fullName) => {
     const mailOptions = {
       from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Password Reset Code - Ronnie's Entertainment',
+      subject: 'Password Reset Code - Ronnie\'s Entertainment',
       html: `
 <!DOCTYPE html>
 <html>
@@ -356,7 +356,7 @@ export const sendPasswordChangedEmail = async (email, fullName) => {
     const mailOptions = {
       from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Password Updated - Ronnie's Entertainment',
+      subject: 'Password Updated - Ronnie\'s Entertainment',
       html: `
 <!DOCTYPE html>
 <html>
