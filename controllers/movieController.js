@@ -174,6 +174,18 @@ export const completeDownload = async (req, res) => {
     const { movieId } = req.params;
     const userId = req.user.userId;
 
+    // ✅ ADD USER VALIDATION FIRST
+    const userCheck = await pool.query('SELECT id FROM userz WHERE id = $1', [userId]);
+    if (userCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'User account not found. Please login again.' });
+    }
+
+    // ✅ ADD MOVIE VALIDATION
+    const movieCheck = await pool.query('SELECT id FROM moviez WHERE id = $1', [movieId]);
+    if (movieCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Movie not found.' });
+    }
+
     // ONLY mark as downloaded when file is 100% saved
     await pool.query(`
       INSERT INTO downloadz (user_id, movie_id) 
