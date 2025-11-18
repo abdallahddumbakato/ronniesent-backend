@@ -95,12 +95,22 @@ export const register = async (req, res) => {
     const newUser = result.rows[0];
 
     // Send welcome notifications (non-blocking)
-  try {
-    const whatsappLink = sendWelcomeWhatsApp(phone, fullName, email, password);
-    await sendWelcomeEmail(email, fullName, password, whatsappLink);
-  } catch (notificationError) {
-    console.error('Notification sending failed:', notificationError); // Keep error only
-  }
+    try {
+      const whatsappLink = sendWelcomeWhatsApp(phone, fullName, email, password);
+      
+      // ✅ ADD TIMEOUT FOR EMAIL
+      const emailPromise = sendWelcomeEmail(email, fullName, password, whatsappLink);
+      setTimeout(() => {
+        if (!emailPromise.isFulfilled) {
+          console.log('Email sending timed out - continuing without email');
+        }
+      }, 10000); // 10 second timeout
+      
+      await emailPromise;
+    } catch (notificationError) {
+      console.error('Notification sending failed:', notificationError); // Keep error only
+      // ✅ CONTINUE USER REGISTRATION EVEN IF EMAIL FAILS
+    }
 
     // Create JWT token
     const token = jwt.sign(
