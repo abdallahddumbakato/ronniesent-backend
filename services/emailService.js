@@ -11,15 +11,15 @@ const __dirname = path.dirname(__filename);
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: process.env.EMAIL_PORT,
-  secure: true,
+  secure: false,
+  requireTLS: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  // ✅ ADD TIMEOUT CONFIGURATION
-  connectionTimeout: 10000, // 10 seconds
-  socketTimeout: 15000, // 15 seconds
-  greetingTimeout: 10000, // 10 seconds
+    connectionTimeout: 30000,
+    greetingTimeout: 30000,
+    socketTimeout: 30000
 });
 
 // Welcome email for new registrations
