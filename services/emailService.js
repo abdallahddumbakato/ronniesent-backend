@@ -4,6 +4,14 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { google } from 'googleapis';
 
+// ✅ ADD DIAGNOSTIC CODE RIGHT HERE:
+console.log('🔧 Email Service - Checking environment variables:');
+console.log('📧 GMAIL_CLIENT_ID:', process.env.GMAIL_CLIENT_ID ? '*** Set ***' : '❌ Missing');
+console.log('🔑 GMAIL_CLIENT_SECRET:', process.env.GMAIL_CLIENT_SECRET ? '*** Set ***' : '❌ Missing');
+console.log('🔄 GMAIL_REFRESH_TOKEN:', process.env.GMAIL_REFRESH_TOKEN ? '*** Set ***' : '❌ Missing');
+console.log('👤 GMAIL_USER:', process.env.GMAIL_USER ? '*** Set ***' : '❌ Missing');
+console.log('📧 EMAIL_USER (old):', process.env.EMAIL_USER ? '*** Set ***' : '❌ Missing');
+
 // Create OAuth2 client
 const oauth2Client = new google.auth.OAuth2(
   process.env.GMAIL_CLIENT_ID,
