@@ -48,7 +48,7 @@ export const sendWelcomeEmail = async (email, fullName, password, whatsappLink) 
     const ronnieLogoPath = path.join(__dirname, '..', 'public', 'RONNIE.png');
 
     const mailOptions = {
-      from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
+      from: `"Ronnie's Entertainment" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: 'Welcome to Ronnie\'s Entertainment - Your Account is Ready!',
       html: `
@@ -135,7 +135,7 @@ export const sendWelcomeEmail = async (email, fullName, password, whatsappLink) 
             
             <p class="center">
                 <strong>Ronnie's Entertainment</strong><br>
-                ${process.env.EMAIL_USER}
+                ${process.env.GMAIL_USER}
             </p>
 
             <p>Dear ${fullName},</p>
@@ -224,7 +224,7 @@ export const sendPasswordResetEmail = async (email, otp, fullName) => {
     const ronnieLogoPath = path.join(__dirname, '..', 'public', 'RONNIE.png');
 
     const mailOptions = {
-      from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
+      from: `"Ronnie's Entertainment" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: 'Password Reset Code - Ronnie\'s Entertainment',
       html: `
@@ -304,7 +304,7 @@ export const sendPasswordResetEmail = async (email, otp, fullName) => {
             
             <p class="center">
                 <strong>Ronnie's Entertainment</strong><br>
-                ${process.env.EMAIL_USER}
+                ${process.env.GMAIL_USER}
             </p>
 
             <p>Dear ${fullName},</p>
@@ -377,7 +377,7 @@ export const sendPasswordChangedEmail = async (email, fullName) => {
     const ronnieLogoPath = path.join(__dirname, '..', 'public', 'RONNIE.png');
 
     const mailOptions = {
-      from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
+      from: `"Ronnie's Entertainment" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: 'Password Updated - Ronnie\'s Entertainment',
       html: `
@@ -457,7 +457,7 @@ export const sendPasswordChangedEmail = async (email, fullName) => {
             
             <p class="center">
                 <strong>Ronnie's Entertainment</strong><br>
-                ${process.env.EMAIL_USER}
+                ${process.env.GMAIL_USER}
             </p>
 
             <p>Dear ${fullName},</p>
@@ -536,7 +536,7 @@ export const sendPaymentConfirmationEmail = async (email, fullName, amount, conf
     const ronnieLogoPath = path.join(__dirname, '..', 'public', 'RONNIE.png');
 
     const mailOptions = {
-      from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
+      from: `"Ronnie's Entertainment" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: `Payment Confirmation (Ronnie's Entertainment Ref No. ${transactionId})`,
       html: `
@@ -615,7 +615,7 @@ export const sendPaymentConfirmationEmail = async (email, fullName, amount, conf
             
             <p class="center">
                 <strong>Ronnie's Entertainment</strong><br>
-                ${process.env.EMAIL_USER}
+                ${process.env.GMAIL_USER}
             </p>
 
             <p>Dear ${fullName},</p>
@@ -635,7 +635,7 @@ export const sendPaymentConfirmationEmail = async (email, fullName, amount, conf
 
             <p>Please do not reply to this email, as this mailbox is unmonitored.</p>
 
-            <p>Any queries relating to your order and delivery should be directed to Ronnie's Entertainment through the email ${process.env.EMAIL_USER}</p>
+            <p>Any queries relating to your order and delivery should be directed to Ronnie's Entertainment through the email ${process.env.GMAIL_USER}</p>
 
             <p>Kind Regards,<br>
             <strong>Ronnie's Entertainment Team</strong></p>
@@ -698,8 +698,8 @@ export const sendAdminPaymentNotification = async (customerName, amount, confirm
     const ronnieLogoPath = path.join(__dirname, '..', 'public', 'RONNIE.png');
 
     const mailOptions = {
-      from: `"Ronnie's Entertainment" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER, // Send to admin email
+      from: `"Ronnie's Entertainment" <${process.env.GMAIL_USER}>`,
+      to: process.env.GMAIL_USER, // Send to admin email
       subject: `Payment Notification (Ronnie's Entertainment Ref No. ${transactionId})`,
       html: `
 <!DOCTYPE html>
@@ -777,7 +777,7 @@ export const sendAdminPaymentNotification = async (customerName, amount, confirm
             
             <p class="center">
                 <strong>Ronnie's Entertainment</strong><br>
-                ${process.env.EMAIL_USER}
+                ${process.env.GMAIL_USER}
             </p>
 
             <p>Dear Admin,</p>
