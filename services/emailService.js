@@ -3,6 +3,27 @@ import { generateSubscriptionReceiptPDF } from './receiptService.js'; // Import 
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// Add transporter verification for debugging
+const verifyTransporter = async () => {
+  try {
+    console.log('🔧 Verifying email transporter configuration...');
+    console.log('📧 Email Host:', process.env.EMAIL_HOST);
+    console.log('🔌 Email Port:', process.env.EMAIL_PORT);
+    console.log('👤 Email User:', process.env.EMAIL_USER ? '*** Set ***' : '❌ Missing');
+    console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? '*** Set ***' : '❌ Missing');
+    
+    await transporter.verify();
+    console.log('✅ Email transporter verified successfully');
+    return true;
+  } catch (error) {
+    console.error('❌ Email transporter verification failed:', error);
+    return false;
+  }
+};
+
+// Call this when the service starts
+verifyTransporter();
+
 // ES module equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
