@@ -28,10 +28,8 @@ const __dirname = path.dirname(__filename);
 // Create transporter
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
-  // port: process.env.EMAIL_PORT,
-  // secure: false,
-  port: 465, // ← Change from 587 to 465
-  secure: true, // ← Change from false to true
+  port: process.env.EMAIL_PORT,
+  secure: false,
   requireTLS: true,
   auth: {
     user: process.env.EMAIL_USER,
