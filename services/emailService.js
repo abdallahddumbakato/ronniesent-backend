@@ -2,42 +2,43 @@ import nodemailer from 'nodemailer';
 import { generateSubscriptionReceiptPDF } from './receiptService.js'; // Import PDF generator
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { google } from 'googleapis';
 
-// Add transporter verification for debugging
-const verifyTransporter = async () => {
-  try {
-    console.log('🔧 Verifying email transporter configuration...');
-    console.log('📧 Email Host:', process.env.EMAIL_HOST);
-    console.log('🔌 Email Port:', process.env.EMAIL_PORT);
-    console.log('👤 Email User:', process.env.EMAIL_USER ? '*** Set ***' : '❌ Missing');
-    console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? '*** Set ***' : '❌ Missing');
-    
-    await transporter.verify();
-    console.log('✅ Email transporter verified successfully');
-    return true;
-  } catch (error) {
-    console.error('❌ Email transporter verification failed:', error);
-    return false;
-  }
-};
+// Create OAuth2 client
+const oauth2Client = new google.auth.OAuth2(
+  process.env.GMAIL_CLIENT_ID,
+  process.env.GMAIL_CLIENT_SECRET,
+  'https://ronniesent-backend.onrender.com/auth/callback'
+);
+
+// Set credentials
+oauth2Client.setCredentials({
+  refresh_token: process.env.GMAIL_REFRESH_TOKEN
+});
 
 // ES module equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Create transporter
+// Create transporter using Gmail API
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: false,
-  requireTLS: true,
+  service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-    connectionTimeout: 30000,
-    greetingTimeout: 30000,
-    socketTimeout: 30000
+    type: 'OAuth2',
+    user: process.env.GMAIL_USER,
+    clientId: process.env.GMAIL_CLIENT_ID,
+    clientSecret: process.env.GMAIL_CLIENT_SECRET,
+    refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+    accessToken: async () => {
+      try {
+        const { token } = await oauth2Client.getAccessToken();
+        return token;
+      } catch (error) {
+        console.error('❌ Error getting access token:', error);
+        throw error;
+      }
+    }
+  }
 });
 
 // Welcome email for new registrations
@@ -829,11 +830,4 @@ export const sendAdminPaymentNotification = async (customerName, amount, confirm
     return false;
   }
 };
-
-
-// ✅ ADD THIS RIGHT HERE - AFTER THE LAST FUNCTION:
-setTimeout(async () => {
-  console.log('🕒 Starting transporter verification in 1 second...');
-  await verifyTransporter();
-}, 1000);
 
