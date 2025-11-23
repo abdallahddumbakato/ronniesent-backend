@@ -28,25 +28,44 @@ oauth2Client.setCredentials({
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Create transporter using Gmail API
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    type: 'OAuth2',
-    user: process.env.GMAIL_USER,
-    clientId: process.env.GMAIL_CLIENT_ID,
-    clientSecret: process.env.GMAIL_CLIENT_SECRET,
-    refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-    accessToken: async () => {
-      try {
-        const { token } = await oauth2Client.getAccessToken();
-        return token;
-      } catch (error) {
-        console.error('❌ Error getting access token:', error);
-        throw error;
+// Create transporter using Gmail API with better error handling
+const createTransporter = async () => {
+  try {
+    console.log('🔧 Creating Gmail API transporter...');
+    
+    // Verify OAuth2 credentials first
+    oauth2Client.setCredentials({
+      refresh_token: process.env.GMAIL_REFRESH_TOKEN
+    });
+
+    // Get access token to verify it works
+    const { token } = await oauth2Client.getAccessToken();
+    console.log('✅ Access token obtained successfully');
+
+    return nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: process.env.GMAIL_USER,
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        accessToken: token
       }
-    }
+    });
+  } catch (error) {
+    console.error('❌ Failed to create Gmail API transporter:', error);
+    throw error;
   }
+};
+
+// Create transporter immediately
+let transporter;
+createTransporter().then(t => {
+  transporter = t;
+  console.log('✅ Gmail API transporter ready');
+}).catch(error => {
+  console.error('❌ Gmail API setup failed:', error);
 });
 
 // Welcome email for new registrations
