@@ -21,9 +21,6 @@ const verifyTransporter = async () => {
   }
 };
 
-// Call this when the service starts
-verifyTransporter();
-
 // ES module equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -832,3 +829,11 @@ export const sendAdminPaymentNotification = async (customerName, amount, confirm
     return false;
   }
 };
+
+
+// ✅ ADD THIS RIGHT HERE - AFTER THE LAST FUNCTION:
+setTimeout(async () => {
+  console.log('🕒 Starting transporter verification in 1 second...');
+  await verifyTransporter();
+}, 1000);
+
